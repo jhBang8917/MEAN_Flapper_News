@@ -6,10 +6,15 @@ var mongoose = require('mongoose');
 
 
 var CommentSchema = new mongoose.Schema({
-    title : String,
-    link : String,
+    body : String,
+    author : String,
     upvotes : {type: Number, default:0},
-    Post :[{type:mongoose.Schema.Types.ObjectId, ref : 'Post'}]
+    post :[{type:mongoose.Schema.Types.ObjectId, ref : 'Post'}]
 });
+
+CommentSchema.methods.upvote = function(cb){
+    this.upvotes += 1;
+    this.save(cb);
+};
 
 mongoose.model('Comment', CommentSchema); // post 모델 define
